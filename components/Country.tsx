@@ -5,6 +5,10 @@ import { Country } from "./Countries";
 export default function Card(props: any) {
   const country: Country = props.country;
 
+  const numberWithCommas = (x: number) =>{
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   return (
     <div className="rounded-xl dark:bg-primary overflow-hidden">
       {country ? (
@@ -20,7 +24,7 @@ export default function Card(props: any) {
           </div>
           <div className="p-8 leading-loose">
             <p className="text-xl font-bold mb-4">{country.name}</p>
-            <p>Population: {country.population}</p>
+            <p>Population: {numberWithCommas(country.population)}</p>
             <p>Region: {country.region}</p>
             <p>Capital: {country.capital}</p>
           </div>
