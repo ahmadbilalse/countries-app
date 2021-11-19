@@ -1,7 +1,7 @@
 import React from "react";
-import Card from "./Card";
 import SearchForm from "./SearchForm";
 import Header from "./Header";
+import Countries from "./Countries";
 
 export default function PageContainer() {
   return (
@@ -11,16 +11,7 @@ export default function PageContainer() {
         <div className="my-8 lg:my-12 max-w-md">
           <SearchForm />
         </div>
-        <div className="grid grid-flow-row gap-8 lg:gap-16 grid-cols-fill-60 justify-center">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <Countries />
       </main>
     </div>
   );

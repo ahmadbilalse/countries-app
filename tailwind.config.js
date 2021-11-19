@@ -11,9 +11,10 @@ module.exports = {
         Nunito: ['Nunito Sans', 'sans-serif'],
       },
       colors: {
-        primary: 'hsl(209, 23%, 22%)',
-        onPrimary: 'hsl(0, 0%, 100%)',
-        background: 'hsl(207, 26%, 17%)',
+        primary: '#2B3945',
+        secondary: '#404d58',
+        onPrimary: '#fff',
+        background: '#202C37',
       },
       gridTemplateColumns: {
         'fill-20': 'repeat(auto-fill, minmax(5rem, 1fr))',
