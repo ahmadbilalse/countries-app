@@ -1,7 +1,10 @@
-import { useQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import React from "react";
+import React, { useEffect } from "react";
 import Country from "./Country";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../app/store";
+import { initCountries } from "../features/countrySlice";
 
 export type Country = {
   id: string;
@@ -30,19 +33,39 @@ export default function Countries() {
     }
   `;
 
-  const { loading, error, data } = useQuery(COUNTRIES);
+  const [getCountries, { loading, error, data }] = useLazyQuery(COUNTRIES);
+  const input = useSelector((state: RootState) => state.search.input);
+  const countries = useSelector((state: RootState) => state.country.countries);
+  const dispatch = useDispatch();
 
-  if (loading || data) {
+  useEffect(() => {
+    getCountries();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      const countries = data.countries.edges.map((node: any) => {
+        const country: Country = node.node;
+        return country;
+      });
+      dispatch(initCountries(countries));
+    }
+  }, [data, dispatch]);
+
+  if (loading || countries) {
     return (
       <div className="grid grid-flow-row gap-8 lg:gap-16 grid-cols-fill-60 justify-center min-h-full min-w-full">
         {loading
           ? Array.from(Array(15)).map((_, index) => {
               return <Country key={index} />;
             })
-          : data.countries.edges.map((node: any) => {
-              const country: Country = node.node;
-              return <Country country={country} key={country.id} />;
-            })}
+          : countries
+              .filter((country: Country) => {
+                return country.name.toLowerCase().includes(input.toLowerCase());
+              })
+              .map((country: Country) => {
+                return <Country country={country} key={country.id} />;
+              })}
       </div>
     );
   }

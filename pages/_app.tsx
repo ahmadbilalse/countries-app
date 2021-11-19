@@ -1,10 +1,8 @@
-import "tailwindcss/tailwind.css";
+import "../styles/global.css";
 import type { AppProps } from "next/app";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { store } from "../app/store";
+import { Provider } from "react-redux";
 
 const client = new ApolloClient({
   uri: "https://graphql.country/graphql",
@@ -13,9 +11,11 @@ const client = new ApolloClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <Component {...pageProps} />
+      </ApolloProvider>
+    </Provider>
   );
 }
 
