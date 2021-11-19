@@ -52,7 +52,7 @@ export default function Countries() {
     }
   }, [data, dispatch]);
 
-  if (loading || countries) {
+  if (loading || data || countries) {
     return (
       <div className="grid grid-flow-row gap-8 lg:gap-16 grid-cols-fill-60 justify-center min-h-full min-w-full">
         {loading

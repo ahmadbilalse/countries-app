@@ -19,7 +19,6 @@ export default function Card(props: any) {
               alt="flag"
               layout="fill"
               objectFit="cover"
-              priority
             />
           </div>
           <div className="p-8 leading-loose">
