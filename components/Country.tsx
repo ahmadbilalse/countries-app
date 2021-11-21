@@ -11,7 +11,7 @@ export default function Card(props: any) {
     <div className="rounded-xl dark:bg-primary overflow-hidden">
       {country ? (
         <Link
-          href={`/${encodeURIComponent(country.name.toLowerCase())}`}
+          href={`/${encodeURIComponent(country.name)}`}
           passHref
         >
           <div>

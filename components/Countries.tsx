@@ -1,5 +1,4 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { gql, useLazyQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import Country from "./Country";
 import { useSelector, useDispatch } from "react-redux";
