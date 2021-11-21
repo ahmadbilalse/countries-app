@@ -2,13 +2,10 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Country } from "./Countries";
+import { numberWithCommas } from "../utils/stringFormat";
 
 export default function Card(props: any) {
   const country: Country = props.country;
-
-  const numberWithCommas = (x: number) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
 
   return (
     <div className="rounded-xl dark:bg-primary overflow-hidden">
