@@ -1,33 +1,39 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Country } from "./Countries";
 
 export default function Card(props: any) {
   const country: Country = props.country;
 
-  const numberWithCommas = (x: number) =>{
+  const numberWithCommas = (x: number) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+  };
 
   return (
     <div className="rounded-xl dark:bg-primary overflow-hidden">
       {country ? (
-        <>
-          <div className="dark:bg-secondary relative w-full h-48">
-            <Image
-              src={country?.flag}
-              alt="flag"
-              layout="fill"
-              objectFit="cover"
-            />
+        <Link
+          href={`/${encodeURIComponent(country.name.toLowerCase())}`}
+          passHref
+        >
+          <div>
+            <div className="dark:bg-secondary relative w-full h-48">
+              <Image
+                src={country?.flag}
+                alt="flag"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <div className="p-8 leading-loose">
+              <p className="text-xl font-bold mb-4">{country.name}</p>
+              <p>Population: {numberWithCommas(country.population)}</p>
+              <p>Region: {country.region}</p>
+              <p>Capital: {country.capital}</p>
+            </div>
           </div>
-          <div className="p-8 leading-loose">
-            <p className="text-xl font-bold mb-4">{country.name}</p>
-            <p>Population: {numberWithCommas(country.population)}</p>
-            <p>Region: {country.region}</p>
-            <p>Capital: {country.capital}</p>
-          </div>
-        </>
+        </Link>
       ) : (
         <>
           <div className="animate-pulse dark:bg-secondary relative w-full h-48"></div>
