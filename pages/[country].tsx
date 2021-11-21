@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import PageContainer from "../components/PageContainer";
 import { BiArrowBack } from "react-icons/bi";
 import Image from "next/image";
 import { numberWithCommas } from "../utils/stringFormat";
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import client from "../utils/apolloClient";
+import { GetStaticProps } from "next";
 
 type CountryDetail = {
   flag: string;
@@ -20,71 +22,9 @@ type CountryDetail = {
   topLevelDomain: string[];
 };
 
-const transformCountryPayload = (rawData: any) => {
-  const data = rawData.countries.edges[0].node;
-  const currencies = data.currencies.edges.map((item: any) => {
-    return item.node.name;
-  });
-  const languages = data.currencies.edges.map((item: any) => {
-    return item.node.name;
-  });
-  // const topLevelDomain = data.topLevelDomain.map((item: string) => 'sdf')
-
-  return {
-    ...data,
-    currencies,
-    languages,
-    // topLevelDomain,
-  };
-};
-
-const COUNTRY_DETAIL = gql`
-  query GetCountryByName($name: String!) {
-    countries(name: $name) {
-      edges {
-        node {
-          id
-          flag
-          name
-          nativeName
-          population
-          region
-          subregion
-          capital
-          topLevelDomain
-          currencies {
-            edges {
-              node {
-                name
-              }
-            }
-          }
-          languages {
-            edges {
-              node {
-                name
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export default function CountryPage() {
+export default function CountryPage(props: any) {
   const router = useRouter();
-  const { country } = router.query;
-  const { loading, error, data } = useQuery(COUNTRY_DETAIL, {
-    variables: { name: decodeURIComponent(String(country)) },
-  });
-
-  const [countryDetail, setCountryDetail] = useState<CountryDetail>();
-  useEffect(() => {
-    if (data) {
-      setCountryDetail(transformCountryPayload(data));
-    }
-  }, [data]);
+  const { countryDetail }: { countryDetail: CountryDetail } = props;
 
   const handleBack = () => {
     router.back();
@@ -143,11 +83,97 @@ export default function CountryPage() {
             </div>
           </div>
         ) : (
-          <div>
-            Loading...
-          </div>
+          <div>Loading...</div>
         )}
       </div>
     </PageContainer>
   );
 }
+
+export async function getStaticPaths() {
+  const COUNTRY_NAMES = gql`
+    query GetCountryNames {
+      countries {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+  `;
+  const { data } = await client.query({
+    query: COUNTRY_NAMES,
+  });
+
+  const countryNames = data.countries.edges.map((item: any) => item.node.name);
+
+  const paths = countryNames.map((item: any) => ({
+    params: { country: item },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const transformCountryPayload = (rawData: any) => {
+    const data = rawData.countries.edges[0].node;
+    const currencies = data.currencies.edges.map((item: any) => {
+      return item.node.name;
+    });
+    const languages = data.currencies.edges.map((item: any) => {
+      return item.node.name;
+    });
+
+    return {
+      ...data,
+      currencies,
+      languages,
+    };
+  };
+
+  const COUNTRY_DETAIL = gql`
+    query GetCountryByName($name: String!) {
+      countries(name: $name) {
+        edges {
+          node {
+            id
+            flag
+            name
+            nativeName
+            population
+            region
+            subregion
+            capital
+            topLevelDomain
+            currencies {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            languages {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const { data } = await client.query({
+    query: COUNTRY_DETAIL,
+    variables: {
+      name: params?.country,
+    },
+  });
+
+  const countryDetail = transformCountryPayload(data);
+
+  return { props: { countryDetail } };
+};

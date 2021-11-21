@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../app/store";
+import { useDispatch } from "react-redux";
 import { update } from "../features/searchSlice";
 import Loader from "./Loader";
 
@@ -33,9 +32,11 @@ export default function SearchForm() {
           id="search"
           placeholder="Search for a country..."
         />
-        {isLoading ? <div className="p-2">
-          <Loader />
-        </div> : null}
+        {isLoading ? (
+          <div className="p-2">
+            <Loader />
+          </div>
+        ) : null}
       </div>
     </>
   );

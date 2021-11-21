@@ -1,11 +1,9 @@
 import searchReducer from './../features/searchSlice';
-import countryReducer from './../features/countrySlice';
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
-    country: countryReducer,
   },
 })
 
