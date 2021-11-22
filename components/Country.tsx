@@ -8,7 +8,7 @@ export default function Card(props: any) {
   const country: Country = props.country;
 
   return (
-    <div className="rounded-xl bg-light-primary dark:bg-primary overflow-hidden drop-shadow">
+    <div className="rounded-xl bg-light-primary dark:bg-primary overflow-hidden drop-shadow cursor-pointer">
       <Link href={`/${encodeURIComponent(country.name)}`} passHref>
         <div className="divide-y dark:divide-y-0">
           <div className="bg-light-secondary dark:bg-secondary relative w-full h-48">

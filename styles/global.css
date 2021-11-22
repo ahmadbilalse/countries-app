@@ -3,3 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button, a {
+  min-width: 44px;
+  min-height: 44px;
+}
