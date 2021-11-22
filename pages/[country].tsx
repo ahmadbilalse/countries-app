@@ -62,6 +62,7 @@ export default function CountryPage(props: any) {
                 width={1200}
                 height={900}
                 layout="responsive"
+                objectFit="contain"
                 alt="flag"
               />
             </div>
