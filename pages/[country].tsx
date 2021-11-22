@@ -55,8 +55,8 @@ export default function CountryPage(props: any) {
           <BiArrowBack className="mr-2" /> Back
         </button>
         {countryDetail ? (
-          <div className="grid gap-8 sm:grid-cols-2 sm:gap-16">
-            <div className="relative h-auto max-w-lg mt-8">
+          <div className="grid gap-8 sm:grid-cols-2 sm:gap-16 items-center">
+            <div className="relative h-auto max-w-lg mt-8 self-start">
               <Image
                 src={countryDetail.flag}
                 width={1200}
