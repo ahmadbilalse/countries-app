@@ -7,6 +7,12 @@ import { numberWithCommas } from "../utils/stringFormat";
 import { gql } from "@apollo/client";
 import client from "../utils/apolloClient";
 import { GetStaticProps } from "next";
+import Link from "next/link";
+
+type Border = {
+  id: string;
+  name: string;
+};
 
 type CountryDetail = {
   flag: string;
@@ -20,6 +26,7 @@ type CountryDetail = {
   region: string;
   subregion: string;
   topLevelDomain: string[];
+  borders: Border[];
 };
 
 export default function CountryPage(props: any) {
@@ -80,6 +87,23 @@ export default function CountryPage(props: any) {
                 {detailItem("Currencies", countryDetail.currencies.join(" "))}
                 {detailItem("Languages", countryDetail.languages.join(" "))}
               </div>
+              <div className="lg:col-span-2">
+                <p className="text-lg font-semibold my-4">Border Countries:</p>
+                <div className="flex flex-wrap">
+                  {countryDetail.borders.map((item: Border) => {
+                    return (
+                      <button
+                        className="px-8 my-2 mx-4 ml-0 bg-light-primary dark:bg-primary drop-shadow rounded-sm"
+                        key={item.id}
+                      >
+                        <Link href={`/${encodeURIComponent(item.name)}`}>
+                          {item.name}
+                        </Link>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         ) : (
@@ -132,6 +156,44 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
   };
 
+  const getBorders = async (borders: string[]) => {
+    const transform = (rawData: any) => {
+      const data = rawData.countries.edges[0].node;
+      return {
+        ...data,
+      };
+    };
+
+    const BORDERS = gql`
+      query GetCountryBorders($alpha3Code: String!) {
+        countries(alpha3Code: $alpha3Code) {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    `;
+
+    const results = await Promise.all(
+      borders.map((item) => {
+        return client.query({
+          query: BORDERS,
+          variables: {
+            alpha3Code: item,
+          },
+        });
+      })
+    );
+
+    return results.map((item) => {
+      const { data } = item;
+      return transform(data);
+    });
+  };
+
   const COUNTRY_DETAIL = gql`
     query GetCountryByName($name: String!) {
       countries(name: $name) {
@@ -146,6 +208,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             subregion
             capital
             topLevelDomain
+            borders
             currencies {
               edges {
                 node {
@@ -174,6 +237,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   });
 
   const countryDetail = transformCountryPayload(data);
+  const borders = await getBorders(countryDetail.borders);
+  countryDetail.borders = borders;
 
   return { props: { countryDetail } };
 };
