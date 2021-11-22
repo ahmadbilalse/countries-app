@@ -1,11 +1,13 @@
 import searchReducer from './../features/searchSlice';
 import themeReducer from './../features/themeSlice';
+import filterReducer from './../features/filterSlice';
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
     theme: themeReducer,
+    filter: filterReducer,
   },
 })
 

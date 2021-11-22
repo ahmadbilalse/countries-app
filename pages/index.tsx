@@ -3,6 +3,7 @@ import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import React from "react";
 import Countries, { Country } from "../components/Countries";
+import Filter from "../components/Filter";
 import PageContainer from "../components/PageContainer";
 import SearchForm from "../components/SearchForm";
 import client from "../utils/apolloClient";
@@ -19,11 +20,18 @@ const Home: NextPage = (props: any) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContainer>
-        <main className="p-8 pt-0 sm:px-10 lg:px-20">
-          <div className="my-8 lg:my-12 max-w-md">
-            <SearchForm />
+        <main className="p-8 sm:px-10 lg:px-20">
+          <div className="grid gap-x-8 gap-y-4 grid-flow-row sm:grid-cols-2">
+            <div className="max-w-md">
+              <SearchForm />
+            </div>
+            <div className="sm:place-self-end">
+              <Filter />
+            </div>
           </div>
-          <Countries {...props} />
+          <div className="my-8">
+            <Countries {...props} />
+          </div>
         </main>
       </PageContainer>
     </div>

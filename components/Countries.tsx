@@ -14,6 +14,7 @@ export type Country = {
 
 export default function Countries(props: any) {
   const input = useSelector((state: RootState) => state.search.input);
+  const filter = useSelector((state: RootState) => state.filter.regionFilter);
   const { countries } = props;
 
   return (
@@ -21,6 +22,9 @@ export default function Countries(props: any) {
       {countries
         .filter((country: Country) => {
           return country.name.toLowerCase().includes(input.toLowerCase());
+        })
+        .filter((country: Country) => {
+          return country.region.includes(filter);
         })
         .map((country: Country) => {
           return <Country country={country} key={country.id} />;
