@@ -121,7 +121,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const currencies = data.currencies.edges.map((item: any) => {
       return item.node.name;
     });
-    const languages = data.currencies.edges.map((item: any) => {
+    const languages = data.languages.edges.map((item: any) => {
       return item.node.name;
     });
 
