@@ -40,23 +40,23 @@ export default function CountryPage(props: any) {
   const detailItem = (title: string, content: string) => {
     return (
       <p>
-        <span className="font-semibold">{title}</span>: {content}
+        <span className="font-semibold">{title}</span>: {content ? content : '-'}
       </p>
     );
   };
 
   return (
     <PageContainer>
-      <div className="p-8 md:p-20">
+      <div className="p-8 md:px-20 md:py-15">
         <button
-          className="px-4 py-2 my-4 flex items-center bg-light-primary dark:bg-primary rounded-md drop-shadow"
+          className="px-8 py-2 my-4 flex items-center bg-light-primary dark:bg-primary rounded-md drop-shadow"
           onClick={handleBack}
         >
           <BiArrowBack className="mr-2" /> Back
         </button>
         {countryDetail ? (
-          <div className="grid gap-8 sm:grid-cols-2 sm:items-center sm:gap-16">
-            <div className="relative h-auto max-w-lg my-8">
+          <div className="grid gap-8 sm:grid-cols-2 sm:gap-16">
+            <div className="relative h-auto max-w-lg mt-8">
               <Image
                 src={countryDetail.flag}
                 width={1200}
@@ -66,7 +66,7 @@ export default function CountryPage(props: any) {
               />
             </div>
             <div className="grid grid-flow-row items-start gap-4 leading-loose lg:grid-cols-2 lg:grid-rows-auto-2">
-              <p className="text-xl font-bold lg:col-span-2 md:text-2xl lg:text-4xl">
+              <p className="text-xl font-bold lg:col-span-2 md:text-2xl lg:text-3xl">
                 {countryDetail.name}
               </p>
               <div>
@@ -88,8 +88,8 @@ export default function CountryPage(props: any) {
                 {detailItem("Languages", countryDetail.languages.join(" "))}
               </div>
               <div className="lg:col-span-2">
-                <p className="text-lg font-semibold my-4">Border Countries:</p>
-                <div className="flex flex-wrap">
+                <p className="text-lg font-semibold my-4 flex flex-wrap">Border Countries: {countryDetail.borders.length === 0 ? '-' : null}</p>
+                <div className="">
                   {countryDetail.borders.map((item: Border) => {
                     return (
                       <button

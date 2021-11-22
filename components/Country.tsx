@@ -22,8 +22,8 @@ export default function Card(props: any) {
           <div className="p-8 leading-loose">
             <p className="text-xl font-bold mb-4">{country.name}</p>
             <p>Population: {numberWithCommas(country.population)}</p>
-            <p>Region: {country.region}</p>
-            <p>Capital: {country.capital}</p>
+            <p>Region: {country.region ? country.region : '-'}</p>
+            <p>Capital: {country.capital ? country.capital : '-'}</p>
           </div>
         </div>
       </Link>

@@ -26,6 +26,7 @@ module.exports = {
         'fill-20': 'repeat(auto-fill, minmax(5rem, 1fr))',
         'fill-40': 'repeat(auto-fill, minmax(10rem, 1fr))',
         'fill-60': 'repeat(auto-fill, minmax(15rem, 1fr))',
+        'auto-2': 'repeat(2, auto)',
       },
       gridTemplateRows: {
         'auto-2': 'repeat(2, auto)',
