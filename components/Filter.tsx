@@ -32,7 +32,7 @@ export default function Filter() {
   });
 
   return (
-    <div className="w-64 relative">
+    <div className="w-64 relative drop-shadow">
       <button
         onClick={handleSelectorClick}
         className="h-16 px-8 py-4 bg-light-primary dark:bg-primary rounded-lg flex items-center justify-between w-full"
