@@ -1,8 +1,14 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   mode: 'jit',
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
+    screens: {
+      'xs': '475px',
+      ...defaultTheme.screens,
+    },
     extend: {
       backgroundImage: {
         'search-icon': "url('/search.svg')",
@@ -30,7 +36,7 @@ module.exports = {
       },
       gridTemplateRows: {
         'auto-2': 'repeat(2, auto)',
-      }
+      },
     },
   },
   variants: {
