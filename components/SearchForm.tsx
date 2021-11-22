@@ -21,11 +21,11 @@ export default function SearchForm() {
 
   return (
     <>
-      <div className="flex items-center dark:bg-primary h-16 rounded-lg">
-        <FaSearch className="text-onPrimary mx-8 flex-shrink-0" />
+      <div className="flex items-center bg-light-primary dark:bg-primary h-16 rounded-lg drop-shadow">
+        <FaSearch className="text-light-onPrimary dark:text-onPrimary mx-8 flex-shrink-0" />
         <input
           onChange={handleChange}
-          className="w-full bg-transparent dark:text-onPrimary focus-within:text-background focus:outline-none"
+          className="w-full bg-transparent focus-within:text-light-onPrimary dark:focus-within:text-onPrimary focus:outline-none"
           type="text"
           autoComplete="off"
           name="search"

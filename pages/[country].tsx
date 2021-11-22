@@ -42,7 +42,7 @@ export default function CountryPage(props: any) {
     <PageContainer>
       <div className="p-8 md:p-20">
         <button
-          className="px-4 py-2 my-4 flex items-center dark:bg-primary rounded-md"
+          className="px-4 py-2 my-4 flex items-center bg-light-primary dark:bg-primary rounded-md drop-shadow"
           onClick={handleBack}
         >
           <BiArrowBack className="mr-2" /> Back

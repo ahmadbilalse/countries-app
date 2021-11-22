@@ -15,6 +15,12 @@ module.exports = {
         secondary: '#404d58',
         onPrimary: '#fff',
         background: '#202C37',
+        light: {
+          primary: '#FFF',
+          secondary: '#DADADA',
+          onPrimary: '#111517',
+          background: '#FAFAFA',
+        }
       },
       gridTemplateColumns: {
         'fill-20': 'repeat(auto-fill, minmax(5rem, 1fr))',
@@ -22,7 +28,7 @@ module.exports = {
         'fill-60': 'repeat(auto-fill, minmax(15rem, 1fr))',
       },
       gridTemplateRows: {
-       'auto-2': 'repeat(2, auto)',
+        'auto-2': 'repeat(2, auto)',
       }
     },
   },

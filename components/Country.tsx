@@ -8,10 +8,10 @@ export default function Card(props: any) {
   const country: Country = props.country;
 
   return (
-    <div className="rounded-xl dark:bg-primary overflow-hidden">
+    <div className="rounded-xl bg-light-primary dark:bg-primary overflow-hidden drop-shadow">
       <Link href={`/${encodeURIComponent(country.name)}`} passHref>
-        <div>
-          <div className="dark:bg-secondary relative w-full h-48">
+        <div className="divide-y dark:divide-y-0">
+          <div className="bg-light-secondary dark:bg-secondary relative w-full h-48">
             <Image
               src={country?.flag}
               alt="flag"

@@ -18,7 +18,7 @@ class MyDocument extends Document {
     return (
       <Html className="dark">
         <Head />
-        <body className="font-Nunito dark:text-onPrimary">
+        <body className="font-Nunito text-light-onPrimary dark:text-onPrimary">
           <Main />
           <NextScript />
         </body>
