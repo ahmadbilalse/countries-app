@@ -1,16 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../app/store";
 import { update } from "../features/searchSlice";
 import Loader from "./Loader";
 
 export default function SearchForm() {
   const dispatch = useDispatch();
+  const input = useSelector((state: RootState) => state.search.input);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>();
   const [isLoading, setIsLoading] = useState(false);
+  const [localInput, setLocalInput] = useState(''); 
+
+  useEffect(() => {
+    setLocalInput(input);
+  }, [])
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newInput = e.currentTarget.value;
+    setLocalInput(newInput);
     setIsLoading(true);
     if (timeout.current) clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
@@ -31,6 +39,7 @@ export default function SearchForm() {
           name="search"
           id="search"
           placeholder="Search for a country..."
+          value={localInput}
         />
         {isLoading ? (
           <div className="p-2">
